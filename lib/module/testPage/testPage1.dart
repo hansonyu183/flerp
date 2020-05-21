@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flerp/widgets/actionBar.dart';
 import 'package:flerp/widgets/formButton/actionButton.dart';
-import 'package:flerp/widgets/formPanel.dart';
 import 'package:flerp/widgets/fromField/datePicker.dart';
-import 'package:flerp/widgets/fromField/dropDownField.dart';
+import 'package:flerp/widgets/fromField/dropDown.dart';
 import 'package:flerp/widgets/fromField/labelField.dart';
+import 'package:flerp/widgets/fromField/jsTable.dart';
 
 class TestPage1 extends StatefulWidget {
   @override
@@ -43,6 +43,7 @@ class TestPage1State extends State<TestPage1> {
                 alignment: Alignment.topLeft,
                 child:
               Wrap(
+                runSpacing: 6,
                 children: [
                 DatePicker(
                   label: "日期",
@@ -72,9 +73,12 @@ class TestPage1State extends State<TestPage1> {
                     DropDownData("A00010", "格力", "gl"),
                     
                   ],
-                )
+                ),
+                JsTable(jsonData: '[{"name":"Ram","email":"ram@gmail.com","age":23,"DOB":"1990-12-01"},'
+                              '{"name":"Shyam","email":"shyam23@gmail.com","age":18,"DOB":"1995-07-01"},'
+                              '{"name":"John","email":"john@gmail.com","age":10,"DOB":"2000-02-24"},'
+                              '{"name":"Ram","age":12,"DOB":"2000-02-01"}]')
               ]))),
-          Expanded(flex: 3, child: Text("table"))
         ]));
   }
 }
