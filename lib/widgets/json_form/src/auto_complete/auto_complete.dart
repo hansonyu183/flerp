@@ -97,7 +97,9 @@ class FLAutoCompleteState extends State<FLAutoComplete> {
                               }},
                             splashColor: Colors.green,
                             child: Text(suggestion["text"]),
-                            //child: widget.itemBuilder(context, suggestion),
+                            /*如果无此回调，则不触发onTapDown,onTap回调晚于关联TextFormField的onEditingComplete,
+                            如果在onEditingComplete中实现自动选择并关掉选择框，就无法触发onTap，onTapDown早于onEditingComplete
+                            所以要在onTapDown关闭选择框*/
                             onTap: ()=>1,
                           ),
                         )
@@ -124,34 +126,9 @@ class FLAutoCompleteState extends State<FLAutoComplete> {
     _suggestionsEntry = null;
     _display = false;
   }
-/*
-  @override
-  void dispose() {
-   // widget.focusNode?.removeListener(_handleNodeUnfocus);
-    super.dispose();
-  }*/
 
   @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(link: _layerLink, child: widget.child);
   }
 }
-/*                 
-
-                child: ListView(
-                  children: _suggestionList.map((T suggestion) {
-                    return ListTile(
-                          title: InkWell(
-                            hoverColor: Colors.grey,
-                            child: Text(suggestion.toString()),
-                            //child: widget.itemBuilder(context, suggestion),
-                            onTap: () {
-                              widget.onSelectedSuggestion?.call(suggestion);
-                              if (widget.hideAfterSelection) {
-                                hideAutoComplete();
-                              }
-                            },)
-                        );
-                        }).toList()
-                ),
-*/

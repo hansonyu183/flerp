@@ -1,5 +1,5 @@
 import 'package:consumer/consumer.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flerp/module/base/eba/editor.dart';
 import 'package:flerp/module/base/res/editor.dart';
 import 'package:flerp/module/base/sup/editor.dart';

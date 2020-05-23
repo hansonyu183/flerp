@@ -84,7 +84,7 @@ class _JsonTableState extends State<JsonTable> {
               child: ExpansionTile(
                 leading: Icon(Icons.filter_list),
                 title: Text(
-                  "表格字段(${filterHeaderList.length})",
+                  "明细(${filterHeaderList.length})",
                  // style: TextStyle(
                  //   fontSize: 13,
                   //  fontWeight: FontWeight.w500,

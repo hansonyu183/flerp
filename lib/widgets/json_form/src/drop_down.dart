@@ -1,4 +1,3 @@
-//import 'package:flui/flui.dart';
 import 'package:flutter/material.dart';
 import 'auto_complete/auto_complete.dart';
 
@@ -25,7 +24,6 @@ class DropDownField extends StatelessWidget {
   final FormFieldSetter<String> onSaved;
 
   final GlobalKey<FLAutoCompleteState> _key = GlobalKey<FLAutoCompleteState>();
-  //final FocusNode _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> _selectDate;
@@ -35,37 +33,23 @@ class DropDownField extends StatelessWidget {
       width: 150,
       child: FLAutoComplete(
         key: _key,
-        //focusNode: _focusNode,
         dataList: dataList,
         onSelectedSuggestion: (suggestion) {
           _sugList = [suggestion];
           _selectDate = suggestion;
           _txtCon.text = suggestion["text"];
         },
-        /*child: RawKeyboardListener(
-            //focusNode: _focusNode,
-            autofocus: true,
-            onKey: (RawKeyEvent event) {
-              print(event);
-              if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
-                _txtCon.text = _selectDate["text"];
-                _key.currentState.hideAutoComplete();
-                //print(sugList);
-              }
-            },*/
             child: TextFormField(              
               controller: _txtCon,
               decoration: InputDecoration(
-                  icon: Icon(iconDate),
-                  labelText: label,
-                  suffix: InkWell(
+                  icon: InkWell(
                     child: Icon(
-                      Icons.arrow_drop_down,
-                      size: 10,
+                      iconDate,
                     ),
                     onTap: () =>
-                         _key.currentState.updateSuggestionList(_sugList),
-                  )),
+                         _key.currentState.updateSuggestionList(dataList),
+                  ),
+                  labelText: label),
               onChanged: (text) {
                 _sugList = [];
                 if (text != null && text.isNotEmpty) {

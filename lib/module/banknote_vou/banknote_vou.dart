@@ -25,8 +25,6 @@ class _BanknoteVouState extends State<BanknoteVou> {
         key: _formKey,
         child: Column(children: [
           Row(children: [
-            ActionButton.back(),
-            ActionButton.forward(),
             ActionButton.print(),
             ActionButton.add(),
             ActionButton.save(onPressed: () {

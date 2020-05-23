@@ -30,7 +30,7 @@ class PageTab extends StatelessWidget {
           return Tab(
               child: Row(
             children: <Widget>[
-              Text(page.title),
+              Text(page.title,style: TextStyle(color: Colors.black),),
               SizedBox(width: 3),
               InkWell(
                   child: Icon(Icons.close, size: 10),

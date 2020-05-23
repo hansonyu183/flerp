@@ -10,7 +10,7 @@ const String _menuJson = '''[
           {"title":"供应商资料","page":"BaseSupEditor"}
         ]},
       {"title":"Test","children":[
-          {"title":"testPage1","page":"testPage1"},
+          {"title":"存取款","page":"testPage1"},
           {"title":"testPage2","page":"testPage2"},
           {"title":"menu 4-3","children":[
             {"title":"menu 4-3-1"},
