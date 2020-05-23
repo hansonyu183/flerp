@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flerp/widgets/erp_widgets/erp_widgets.dart';
 import 'package:flerp/widgets/json_form/json_form.dart';
-import 'package:intl/intl.dart';
 
-class TestPage1 extends StatefulWidget {
+class BanknoteVou extends StatefulWidget {
+  BanknoteVou({Key key}) : super(key: key);
+  static String pageTitle="票据处理单";
   @override
-  TestPage1State createState() => TestPage1State();
+  _BanknoteVouState createState() => _BanknoteVouState();
 }
 
-class TestPage1State extends State<TestPage1> {
-  final _formKey = GlobalKey<FormState>();
+class _BanknoteVouState extends State<BanknoteVou> {
+   final _formKey = GlobalKey<FormState>();
   var _fromValues = {
     // Key:    Value
     'date': DatePicker.dateToString(DateTime.now()),
@@ -32,28 +33,32 @@ class TestPage1State extends State<TestPage1> {
               //_state.save();
               print(_state);
               print(_fromValues);
-            })
+            }),
+            ActionButton.check(),
           ]),
           Expanded(
               flex: 1,
               child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Wrap(runSpacing: 6, children: [
-                    DatePicker(
-                      label: "日期",
-                      initialDate: _fromValues['date'],
-                      onEditingComplete: (String value) => print(value),
-                      onSaved: (String v) => _fromValues['date'] = v,
-                    ),
-                    LabelField(
-                      iconData: Icons.monetization_on,
-                      label: "金额",
-                      initialValue: _fromValues['amount'],
-                      onSaved: (String v) => _fromValues['amount'] = v,
-                    ),
-                    DropDownField(
-                      label: "客户",
-                      iconDate: Icons.account_box,
+                alignment: Alignment.topLeft,
+                child:
+              Wrap(
+                runSpacing: 6,
+                children: [
+                DatePicker(
+                  label: "日期",
+                  initialDate: _fromValues['date'],
+                  onEditingComplete: (String value) => print(value),
+                  onSaved: (String v) => _fromValues['date'] = v,
+                ),
+                LabelField(
+                  iconData: Icons.monetization_on,
+                  label: "金额",
+                  initialValue: _fromValues['amount'],
+                  onSaved: (String v) => _fromValues['amount'] = v,
+                ),
+                DropDownField(
+                  label: "客户",
+                  iconDate: Icons.account_box,
                       dataList: [
                         {
                           "value": "A0001",
@@ -70,18 +75,12 @@ class TestPage1State extends State<TestPage1> {
                         {"value": "A0009", "text": "联想", "easy_code": "lx"},
                         {"value": "A00010", "text": "格力", "easy_code": "gl"},
                       ],
-                    ),
-                    VouNo(
-                        initialValue: "AF-" +
-                            DateFormat("yyyyMMdd").format(DateTime.now()) +
-                            "-001"),
-                    JsTable(
-                        jsonData:
-                            '[{"name":"Ram","email":"ram@gmail.com","age":23,"DOB":"1990-12-01"},'
-                            '{"name":"Shyam","email":"shyam23@gmail.com","age":18,"DOB":"1995-07-01"},'
-                            '{"name":"John","email":"john@gmail.com","age":10,"DOB":"2000-02-24"},'
-                            '{"name":"Ram","age":12,"DOB":"2000-02-01"}]')
-                  ]))),
+                ),
+                JsTable(jsonData: '[{"name":"Ram","email":"ram@gmail.com","age":23,"DOB":"1990-12-01"},'
+                              '{"name":"Shyam","email":"shyam23@gmail.com","age":18,"DOB":"1995-07-01"},'
+                              '{"name":"John","email":"john@gmail.com","age":10,"DOB":"2000-02-24"},'
+                              '{"name":"Ram","age":12,"DOB":"2000-02-01"}]')
+              ]))),
         ]));
   }
 }

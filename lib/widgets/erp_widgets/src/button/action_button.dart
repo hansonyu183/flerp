@@ -10,7 +10,7 @@ class ActionButton extends StatelessWidget {
   const ActionButton.print({this.iconDate=Icons.print,this.tooltip="打印",this.onPressed});
   const ActionButton.add({this.iconDate=Icons.add,this.tooltip="新增",this.onPressed});
   const ActionButton.save({this.iconDate=Icons.save,this.tooltip="保存",this.onPressed});
-
+  const ActionButton.check({this.iconDate=Icons.check_circle_outline,this.tooltip="审核",this.onPressed});
   @override
   Widget build(BuildContext context) {    
     return IconButton(

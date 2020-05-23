@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:json_utilities/json_utilities.dart';
+import 'json_utilities.dart';
 
-import './jsonTable.dart';
-import './jsonTableColumn.dart';
+import 'json_table_column.dart';
+import 'json_table.dart';
 
 class TableColumn extends StatelessWidget {
   final String header;

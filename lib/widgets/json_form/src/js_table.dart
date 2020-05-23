@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:json_table/json_table.dart';
 import 'dart:convert';
 
-import '../core/jsonTable/jsonTable.dart';
-import '../core/jsonTable/jsonTableColumn.dart';
+import 'json_table/json_table.dart';
 
 class JsTable extends StatefulWidget {
   JsTable({Key key, this.jsonData}) : super(key: key);

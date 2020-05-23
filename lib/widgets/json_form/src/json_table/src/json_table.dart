@@ -3,8 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import './paginationBox.dart';
 
-import './jsonTableColumn.dart';
-import './tableColumn.dart';
+import 'json_table_column.dart';
+import 'table_column.dart';
 
 typedef TableHeaderBuilder = Widget Function(String header);
 typedef TableCellBuilder = Widget Function(dynamic value);

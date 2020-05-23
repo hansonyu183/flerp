@@ -26,7 +26,7 @@ dependencies:
   dio: ^3.0.9
   dio_cookie_manager: ^1.0.0
   consumer: ^2.0.2
-  json_table: ^1.4.0
+  form_field_validator: ^1.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
