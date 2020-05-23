@@ -1,12 +1,12 @@
+import 'package:flerp/models/user_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flerp/state.dart';
 
-typedef TabCallBack = void Function(PageVo page);
+typedef TabCallBack = void Function(UserPage page);
 
 class PageTab extends StatelessWidget {
   PageTab({this.currentPageIndex, this.openPages, this.onTap, this.onClose});
   final int currentPageIndex;
-  final List<PageVo> openPages;
+  final List<UserPage> openPages;
   final TabCallBack onClose;
   final TabCallBack onTap;
 
@@ -22,11 +22,11 @@ class PageTab extends StatelessWidget {
         child: Row(children: <Widget>[genPageBar(openPages)]));
   }
 
-  TabBar genPageBar(List<PageVo> openPages){
+  TabBar genPageBar(List<UserPage> openPages){
     return TabBar(
         onTap: (index) => onTap(openPages[index]),
         isScrollable: true,
-        tabs: openPages.map<Tab>((PageVo page) {
+        tabs: openPages.map<Tab>((UserPage page) {
           return Tab(
               child: Row(
             children: <Widget>[

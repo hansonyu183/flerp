@@ -1,87 +1,57 @@
-import 'dart:convert';
+import 'package:flerp/models/index.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flerp/icon.dart';
 
-const String _menuJson = '''[
-      {"title":"基础资料",
-        "children":[
-          {"title":"客户资料","page":"BaseEbaEditor"},
-          {"title":"产品资料","page":"BaseResEditor"},
-          {"title":"供应商资料","page":"BaseSupEditor"}
-        ]},
-      {"title":"Test","children":[
-          {"title":"存取款","page":"testPage1"},
-          {"title":"testPage2","page":"testPage2"},
-          {"title":"menu 4-3","children":[
-            {"title":"menu 4-3-1"},
-            {"title":"menu 4-3-2"}
-          ]}
-      ]}
-    ]''';
-
-typedef MenuCallBack = void Function(String title, String pageName);
-typedef ExpandCallBack = void Function();
+typedef MenuCallBack = void Function(UserPage);
 
 class JsonMenu extends StatelessWidget {
-  JsonMenu({Key key, this.json=_menuJson, this.onTap, this.onExpnd}) : super(key: key);
-  final String json ;
+  JsonMenu({Key key, this.userData, this.onTap, this.onExpend}) : super(key: key);
+  final UserData userData ;
   final MenuCallBack onTap; //声明函数对象
-  final ExpandCallBack onExpnd;
+  final VoidCallback onExpend;
   
   @override
   Widget build(BuildContext context) {
-    return json == null ? Text("null") : genMenu(json);
+    return userData == null ? Text("null") : genMenu(userData);
   }
 
-  ListView genMenu(String json) {
-    List<Widget> menuBody = genList(jsonDecode(json));
+  ListView genMenu(UserData userData) {
+    List<Widget> menuBody = genList(userData.modules);
 
     ListTile menuHeader = ListTile(
       title: Icon(Icons.menu),
-      onTap: onExpnd,
+      onTap: onExpend,
     );
 
     ListView menu = ListView(children: [menuHeader, ...menuBody]);
     return menu;
   }
 
-  List<Widget> genList(List data) {
-    List<Widget> menuBody = data.map((item) {
-      if (item['children'] != null) {
+  List<Widget> genList(List<UserModule> modules) {
+    List<Widget> menuBody = modules.map((module) {
+      if (module.modules != null) {
         return ExpansionTile(
-          children: genList(item['children']),
-          title: Text(item['title']),
+          children: genList(module.modules),
+          title: Text(module.name),
         );
       } else {
-        return Listitem(
-          title: item['title'],
-          page: item['page'],
-          onTap: onTap,
-        );
+        return genItem(module.pages);
       }
     }).toList();
     return menuBody;
   }
-}
-
-class Listitem extends StatelessWidget {
-  Listitem({Key key, this.title, this.page, this.onTap}) : super(key: key);
-  final String title;
-  final String page;
-  final MenuCallBack onTap; //声明函数对象
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
+  
+  List<Widget> genItem(List<UserPage> pages) {
+    return pages.map((page){
+        return  ListTile(
         leading: Icon(getIcon()),
         title: InkWell(
-          onTap: _onTap,
-          child: Text(title),
+          onTap:()=> onTap(page),
+          child: Text(page.title),
           splashColor: Colors.green,
         ));
-  }
-
-  void _onTap() {
-    onTap(title, page);
-  }
+      }
+    ).toList();
+  }  
 }

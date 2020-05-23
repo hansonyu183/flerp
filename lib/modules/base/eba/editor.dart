@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flerp/state.dart';
 
 class _Model {
   String ebaId;
@@ -22,8 +21,6 @@ class _Model {
 class BaseEbaEditor extends StatelessWidget {
   BaseEbaEditor({Key key,this.json}) : super(key: key);
   final String json;
-  final _name = "BaseEbaEditor";
-  final _title ="客户资料";
   @override
   Widget build(BuildContext context) {   
     _Model _model; 
@@ -42,7 +39,7 @@ class BaseEbaEditor extends StatelessWidget {
           ),
           FlatButton(child: Text("Svae"),
             onPressed: (){
-              gobalConsumer.state.storeModel(_name,_title,jsonEncode(_model));
+              print(1);
               })
           ]));
   }

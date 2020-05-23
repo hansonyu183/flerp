@@ -1,4 +1,4 @@
-import 'package:consumer/consumer.dart';
+/*import 'package:consumer/consumer.dart';
 import 'package:flutter/material.dart';
 import 'package:flerp/module/base/eba/editor.dart';
 import 'package:flerp/module/base/res/editor.dart';
@@ -87,3 +87,4 @@ class GlobalState {
 }
 
 var gobalConsumer = Consumer(GlobalState());
+*/

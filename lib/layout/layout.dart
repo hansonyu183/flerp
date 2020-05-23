@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flerp/state.dart';
 import './menu.dart';
 import './pageTab.dart';
 import './pageContent.dart';
+import './state.dart';
 
+import 'package:flerp/models/index.dart';
+import 'package:flerp/modules/modules.dart';
 
 
 
@@ -14,6 +16,7 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //List<UserPage> userPages = [UserPage(0,"test","test")]
     return Scaffold(
       backgroundColor: Colors.grey,
       body: LayoutBody(),
@@ -42,30 +45,35 @@ class Layout extends StatelessWidget {
 class LayoutBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    UserData userDate =Modules.defaultUserData();
+
+    print(userDate.toJson());
+    layoutConsumer.state.initState();
+
     JsonMenu menu = JsonMenu(
-      onTap: (String title,String pageName) => 
-        gobalConsumer.setState((state) => state.openPage(PageVo(pageName,title,""))),
-      onExpnd: ()=>gobalConsumer.setState((state) => state.expndMenu()),
+      userData: userDate,
+      onTap: (page) => layoutConsumer.setState((state) => state.openPage(page)),
+      onExpend: ()=>layoutConsumer.setState((state) => state.expndMenu()),
     );
 
-    Widget pageBar = gobalConsumer.build((ctx, state) {
+    Widget pageBar = layoutConsumer.build((ctx, state) {
       return PageTab(
         currentPageIndex:state.currentPageIndex,
         openPages: state.openPages,
-        onTap: (PageVo page)=>gobalConsumer.setState((state) => state.loadPage(page)),
-        onClose: (PageVo page)=>gobalConsumer.setState((state) => state.closePage(page))
+        onTap: (UserPage page)=>layoutConsumer.setState((state) => state.loadPage(page)),
+        onClose: (UserPage page)=>layoutConsumer.setState((state) => state.closePage(page))
         );},
       memo: (s) => [s.currentPageIndex],
     );
 
-    Widget content= gobalConsumer.build((ctx, state) {
+    Widget content= layoutConsumer.build((ctx, state) {
       return PageContent(
         currentPageIndex:state.currentPageIndex,
         openPages:state.openWidgets);},
       memo: (s) => [s.currentPageIndex]
     );
 
-    Widget body = gobalConsumer.build((ctx, state) {
+    Widget body = layoutConsumer.build((ctx, state) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
