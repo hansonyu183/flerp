@@ -7,19 +7,20 @@ part of 'user_data.dart';
 // **************************************************************************
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) {
-  return UserData()
-    ..id = json['id'] as int
-    ..name = json['name'] as String
-    ..rols = json['rols'] as String
-    ..modules = (json['modules'] as List)
+  return UserData(
+    id: json['id'] as int,
+    name: json['name'] as String,
+    role: json['role'] as String,
+    modules: (json['modules'] as List)
         ?.map((e) =>
             e == null ? null : UserModule.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList(),
+  );
 }
 
 Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'rols': instance.rols,
-      'modules': instance.modules,
+      'role': instance.role,
+      'modules': instance.modules?.map((e) => e?.toJson())?.toList(),
     };

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flerp/widgets/erp_widgets/erp_widgets.dart';
 import 'package:flerp/widgets/json_form/json_form.dart';
 
-class BanknoteVou extends StatefulWidget {
-  BanknoteVou({Key key}) : super(key: key);
+class BankNoteVou extends StatefulWidget {
+  BankNoteVou({Key key}) : super(key: key);
   static String pageTitle="票据处理单";
   @override
-  _BanknoteVouState createState() => _BanknoteVouState();
+  _BankNoteVouState createState() => _BankNoteVouState();
 }
 
-class _BanknoteVouState extends State<BanknoteVou> {
+class _BankNoteVouState extends State<BankNoteVou> {
    final _formKey = GlobalKey<FormState>();
   var _fromValues = {
     // Key:    Value
@@ -19,7 +19,6 @@ class _BanknoteVouState extends State<BanknoteVou> {
 
   @override
   Widget build(BuildContext context) {
-    var _state = _formKey.currentState;
 
     return Form(
         key: _formKey,
@@ -28,9 +27,6 @@ class _BanknoteVouState extends State<BanknoteVou> {
             ActionButton.print(),
             ActionButton.add(),
             ActionButton.save(onPressed: () {
-              //_state.save();
-              print(_state);
-              print(_fromValues);
             }),
             ActionButton.check(),
           ]),
@@ -45,7 +41,6 @@ class _BanknoteVouState extends State<BanknoteVou> {
                 DatePicker(
                   label: "日期",
                   initialDate: _fromValues['date'],
-                  onEditingComplete: (String value) => print(value),
                   onSaved: (String v) => _fromValues['date'] = v,
                 ),
                 LabelField(

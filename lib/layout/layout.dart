@@ -5,9 +5,6 @@ import './pageContent.dart';
 import './state.dart';
 
 import 'package:flerp/models/index.dart';
-import 'package:flerp/modules/modules.dart';
-
-
 
 class Layout extends StatelessWidget {
   Layout({Key key, this.appTitle}) : super(key: key);
@@ -45,55 +42,58 @@ class Layout extends StatelessWidget {
 class LayoutBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserData userDate =Modules.defaultUserData();
-
-    print(userDate.toJson());
-    layoutConsumer.state.initState();
-
-    JsonMenu menu = JsonMenu(
-      userData: userDate,
-      onTap: (page) => layoutConsumer.setState((state) => state.openPage(page)),
-      onExpend: ()=>layoutConsumer.setState((state) => state.expndMenu()),
+    Widget menu = layoutConsumer.build(
+      (ctx, state) {
+        return JsonMenu(
+          userData: state.userData,
+          onTap: (page) =>
+              layoutConsumer.setState((state) => state.openPage(page)),
+          onExpend: () => layoutConsumer.setState((state) => state.expndMenu()),
+        );
+      },
+      memo: (s) => [s.userData],
     );
 
-    Widget pageBar = layoutConsumer.build((ctx, state) {
-      return PageTab(
-        currentPageIndex:state.currentPageIndex,
-        openPages: state.openPages,
-        onTap: (UserPage page)=>layoutConsumer.setState((state) => state.loadPage(page)),
-        onClose: (UserPage page)=>layoutConsumer.setState((state) => state.closePage(page))
-        );},
+    Widget pageBar = layoutConsumer.build(
+      (ctx, state) {
+        return PageTab(
+            currentPageIndex: state.currentPageIndex,
+            openPages: state.openPages,
+            onTap: (UserPage page) =>
+                layoutConsumer.setState((state) => state.loadPage(page)),
+            onClose: (UserPage page) =>
+                layoutConsumer.setState((state) => state.closePage(page)));
+      },
       memo: (s) => [s.currentPageIndex],
     );
 
-    Widget content= layoutConsumer.build((ctx, state) {
+    Widget content = layoutConsumer.build((ctx, state) {
       return PageContent(
-        currentPageIndex:state.currentPageIndex,
-        openPages:state.openWidgets);},
-      memo: (s) => [s.currentPageIndex]
-    );
+          currentPageIndex: state.currentPageIndex,
+          openPages: state.openWidgets);
+    }, memo: (s) => [s.currentPageIndex]);
 
     Widget body = layoutConsumer.build((ctx, state) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            width: state.expandMenu ? 300 : 60,
+            width: state.expandMenu ? 200 : 60,
             child: Container(
               decoration: BoxDecoration(
-               // color: Colors.black12,
-              ),
+                  // color: Colors.black12,
+                  ),
               child: menu,
             ),
           ),
-          Expanded(child: Column(children: <Widget>[
-            pageBar,Expanded(child: content),
-            // Expanded(child: content )              
+          Expanded(
+              child: Column(children: <Widget>[
+            pageBar, Expanded(child: content),
+            // Expanded(child: content )
           ]))
         ],
-      );},
-      memo: (s) => [s.expandMenu]
-    );
+      );
+    }, memo: (s) => [s.expandMenu]);
 
     return body;
   }

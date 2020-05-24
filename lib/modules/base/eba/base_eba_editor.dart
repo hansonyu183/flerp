@@ -21,6 +21,7 @@ class _Model {
 class BaseEbaEditor extends StatelessWidget {
   BaseEbaEditor({Key key,this.json}) : super(key: key);
   final String json;
+  static const String js="d";
   @override
   Widget build(BuildContext context) {   
     _Model _model; 

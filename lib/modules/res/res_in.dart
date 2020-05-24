@@ -3,12 +3,12 @@ import 'package:flerp/widgets/erp_widgets/erp_widgets.dart';
 import 'package:flerp/widgets/json_form/json_form.dart';
 import 'package:intl/intl.dart';
 
-class TestPage1 extends StatefulWidget {
+class ResIn extends StatefulWidget {
   @override
-  TestPage1State createState() => TestPage1State();
+  ResInState createState() => ResInState();
 }
 
-class TestPage1State extends State<TestPage1> {
+class ResInState extends State<ResIn> {
   final _formKey = GlobalKey<FormState>();
   var _fromValues = {
     // Key:    Value
@@ -18,7 +18,6 @@ class TestPage1State extends State<TestPage1> {
 
   @override
   Widget build(BuildContext context) {
-    var _state = _formKey.currentState;
 
     return Form(
         key: _formKey,

@@ -2,42 +2,44 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class _Model {
-  String resID;
-  String resName;
+  String supID;
+  String supName;
 
-  _Model(this.resID, this.resName);
+  _Model(this.supID, this.supName);
 
   _Model.fromJson(Map<String, dynamic> json)
-      : resID = json['resID'],
-        resName = json['resName'];
+      : supID = json['supID'],
+        supName = json['supName'];
 
   Map<String, dynamic> toJson() =>
     {
-      'resID': resID,
-      'resName': resName,
+      'supID': supID,
+      'supName': supName,
     };
 }
 
-class BaseResEditor extends StatelessWidget {
-  BaseResEditor({Key key,this.json}) : super(key: key);
+class BaseSupEditor extends StatelessWidget {
+  BaseSupEditor({Key key,this.json}) : super(key: key);
   final String json;
-  final _name = "BaseResEditor";
-  final _title ="商品资料";
   @override
   Widget build(BuildContext context) {    
+      TextEditingController _txtCon = new TextEditingController();
+
     _Model _model; 
     if (json != null && json!=""){
      _model = new _Model.fromJson(jsonDecode(json));
     } else {
-      _model = _Model("res1","");
+      _model = _Model("sup1","");
     }
+    _txtCon.text=_model.supName;
     return  Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children:[
-          Text(_model.resID),
+          Text(_model.supID),
           TextField(
-            onChanged : (value) {_model.resName=value;}
+            controller: _txtCon,
+            onChanged : (value) {_model.supName=value;}
           ),
           FlatButton(child: Text("Svae"),
             onPressed: (){

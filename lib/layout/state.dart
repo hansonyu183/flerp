@@ -1,22 +1,22 @@
 import 'package:consumer/consumer.dart';
+import 'package:flerp/models/index.dart';
+import 'package:flerp/modules/app_modules.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flerp/models/user_page.dart';
-
 class LayoutState {
+  UserData userData;
   bool expandMenu=true;
   int currentPageIndex = 0;
   List<UserPage> openPages;//=["客户资料","商品资料","供应商资料"];
   List<Widget> openWidgets;
 
-void initState(){
-  var firstPage = UserPage();
-  firstPage.id=0;
-  firstPage.name="testPage1";
-  firstPage.title="页面1";
-  openPages=[firstPage];
-  openWidgets=[firstPage.widget];
-}
+  LayoutState.test(){
+    UserData _ud  =AppModules().defaultUserData;
+    UserPage _firstPage = _ud.modules.last.pages.last;
+    this.userData = _ud;
+    this.openPages=[_firstPage];
+    this.openWidgets=[_firstPage.buildWidget()];
+  }
 
 void closePage(UserPage page) {
     int idx = openPages.indexWhere((element) =>  element.name==page.name);
@@ -42,7 +42,7 @@ void closePage(UserPage page) {
           openPages=newList;
 
           List<Widget> widgetList = [...openWidgets];
-          widgetList.add(page.widget);
+          widgetList.add(page.buildWidget());
           openWidgets=widgetList;
 
           currentPageIndex=openPages.length-1;
@@ -62,4 +62,4 @@ void closePage(UserPage page) {
 
 }
 
-var layoutConsumer = Consumer(LayoutState());
+var layoutConsumer = Consumer(LayoutState.test());

@@ -4,9 +4,9 @@ import 'user_page.dart';
 
 part 'user_module.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserModule {
-      UserModule();
+      UserModule({this.id,this.name,this.pages,this.modules});
 
   int id;
   String name;
@@ -14,9 +14,6 @@ class UserModule {
   List<UserModule> modules;
 
   factory UserModule.fromJson(Map<String,dynamic> json) => _$UserModuleFromJson(json);
-  Map<String, dynamic> toJson() => _$UserModuleToJson(this);
-  
+  Map<String, dynamic> toJson() => _$UserModuleToJson(this);  
 
 }
-
-

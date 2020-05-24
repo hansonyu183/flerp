@@ -7,10 +7,11 @@ part of 'user_page.dart';
 // **************************************************************************
 
 UserPage _$UserPageFromJson(Map<String, dynamic> json) {
-  return UserPage()
-    ..id = json['id'] as int
-    ..name = json['name'] as String
-    ..title = json['title'] as String;
+  return UserPage(
+    id: json['id'] as int,
+    name: json['name'] as String,
+    title: json['title'] as String,
+  );
 }
 
 Map<String, dynamic> _$UserPageToJson(UserPage instance) => <String, dynamic>{

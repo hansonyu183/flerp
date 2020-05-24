@@ -18,7 +18,6 @@ class TestPage1State extends State<TestPage1> {
 
   @override
   Widget build(BuildContext context) {
-    var _state = _formKey.currentState;
 
     return Form(
         key: _formKey,

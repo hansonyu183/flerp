@@ -1,6 +1,0 @@
-{
-    "id":1,
-    "name":"base",
-    "pages":"$[]user_page",
-    "modules" : "$[]user_module"
-}

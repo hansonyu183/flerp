@@ -18,7 +18,6 @@ class JsonMenu extends StatelessWidget {
 
   ListView genMenu(UserData userData) {
     List<Widget> menuBody = genList(userData.modules);
-
     ListTile menuHeader = ListTile(
       title: Icon(Icons.menu),
       onTap: onExpend,
@@ -29,17 +28,17 @@ class JsonMenu extends StatelessWidget {
   }
 
   List<Widget> genList(List<UserModule> modules) {
-    List<Widget> menuBody = modules.map((module) {
-      if (module.modules != null) {
+    return modules.map((module) {
+        List<Widget> pagemenu = [];
+        if (module.pages!=null)
+          pagemenu=genItem(module.pages);
+        if (module.modules != null)
+          pagemenu.addAll(genList(module.modules));
         return ExpansionTile(
-          children: genList(module.modules),
+          children: pagemenu,
           title: Text(module.name),
         );
-      } else {
-        return genItem(module.pages);
-      }
     }).toList();
-    return menuBody;
   }
   
   List<Widget> genItem(List<UserPage> pages) {

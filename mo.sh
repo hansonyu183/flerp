@@ -1,1 +1,1 @@
-flutter pub run json_to_model
+flutter pub run build_runner watch
