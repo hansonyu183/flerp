@@ -1,38 +1,44 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:consumer/consumer.dart';
-
 import 'action_button.dart';
 
 enum ActionEnum { notSaved, saved, askChecked, checked, finished }
 
-class ActionState {
-  int actionIndex;
-
-  doAction() {
-    if (actionIndex < ActionEnum.finished.index) actionIndex++;
-  }
-
-  undoAction() {
-    if (actionIndex > 0) actionIndex--;
-  }
-}
-
-var consumer = Consumer(ActionState());
-
-class UpdateAction extends StatelessWidget {
+class UpdateAction extends StatefulWidget {
   const UpdateAction({Key key, this.actionState, this.onAction})
       : super(key: key);
   final ActionEnum actionState;
   final VoidCallback onAction;
 
+  @override
+  _UpdateActionState createState() => _UpdateActionState();
+}
+
+class _UpdateActionState extends State<UpdateAction> {
+  int actionIndex;
+  
+
   void _onDoAction() {
-    consumer.setState((state) => state.doAction());
+    if (actionIndex < ActionEnum.finished.index){
+       setState(() {
+          actionIndex++;
+       });
+    }
   }
 
   void _onUndoAction() {
-    consumer.setState((state) => state.undoAction());
+    if (actionIndex > 0){
+      setState(() {
+        actionIndex--;
+      });
+    } 
+  }
+
+  void _onInitAction() {
+    setState(() {
+      actionIndex=0;
+    });
   }
 
   List<Widget> _getActionButton(int actionStateIndex) {
@@ -46,8 +52,8 @@ class UpdateAction extends StatelessWidget {
       case 1:
         _actionButtons = [
           ActionButton.save(onPressed: ()=>1),
-          //Text("保存"),
           ActionButton.askCheck(onPressed: _onDoAction),
+          ActionButton.delete(onPressed: _onInitAction),
           //Text("送审")
         ];
         break;
@@ -79,14 +85,15 @@ class UpdateAction extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    actionIndex=widget.actionState.index;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    consumer.state.actionIndex=actionState.index;
     return Container(
-      child:  consumer.build((ctx, state) {
-        return Row(children:_getActionButton(state.actionIndex));
-        },
-      memo: (s) => [s.actionIndex]
-    )
+      child:   Row(children:_getActionButton(actionIndex))
     );
   }
 }

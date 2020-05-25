@@ -16,6 +16,7 @@ class ActionButton extends StatelessWidget {
   const ActionButton.finish({this.iconDate=Icons.check_circle,this.tooltip="完成",this.onPressed});
   const ActionButton.unFinish({this.iconDate=Icons.undo,this.tooltip="反完成",this.onPressed});
   const ActionButton.option({this.iconDate=Icons.settings,this.tooltip="选项",this.onPressed});
+  const ActionButton.delete({this.iconDate=Icons.delete_forever,this.tooltip="删除",this.onPressed});
   @override
   Widget build(BuildContext context) {    
     return Row(children:[IconButton(
