@@ -1,26 +1,36 @@
-import 'package:consumer/consumer.dart';
+import 'package:flerp/domain/models/index.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
-import 'package:flerp/models/index.dart';
-import 'package:flerp/modules/app_modules.dart';
+import 'package:flerp/core/view_models/view_model.dart';
+import 'app_m.dart';
 
-class _State {
-  UserData userData;
-  _State();
+class AppVm extends ViewModel<AppM> {
+  AppVm(BuildContext viewCtx):super(viewCtx,AppM.admin());
 
-}
-
-var appConsumer = Consumer(_State());
-
-class LoginVm{
-  LoginVm();
-
-  void logout(){
-    appConsumer.setState((s) => s.userData=null);
+  void logout() {
+    setState((s) => s.user = null);
   }
 
-  void login(){
-    appConsumer.setState((s) => s.userData=AppModules().defaultUserData);
+  void login(String userName, passWord) async {
+    /* var cancelToast =
+        BotToast.showLoading(duration: Duration(milliseconds: 3000));
+
+    //var data = await UserData.fromServer(userName, passWord);
+    var data=AppModules().defaultUserData;
+    if (data.modules != null) {
+      //await fetchEbas();
+      appConsumer.setState((s) => s.userData = data);
+    } else {
+      BotToast.showText(text: '用户未授权');
+    }
+    cancelToast();
+
+    //ResponeBody responeBody = await UserApi.login({"name":userName,"passwrod":passWord});*/
+  }
+
+  void register(String userName, passWord) async {
+    //UserData.register(userName, passWord);
+    //AppVm.login();
   }
 }
-
-var appVm = LoginVm();

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flerp/app/app_v.dart';
+
+import 'app/app.dart';
+
 
 void main() {
-  runApp(AppV());
+  runApp(App());
 }
+
