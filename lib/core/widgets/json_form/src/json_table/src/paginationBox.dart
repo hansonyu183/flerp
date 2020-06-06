@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 class PaginationBox extends StatelessWidget {
-  final int pageIndex;
-  final int pagesCount;
-  final VoidCallback onLeftButtonTap;
-  final VoidCallback onRightButtonTap;
-
-  PaginationBox({
+  const PaginationBox({
     @required this.pageIndex,
     @required this.pagesCount,
     @required this.onLeftButtonTap,
     @required this.onRightButtonTap,
   });
 
+  final int pageIndex;
+  final int pagesCount;
+  final VoidCallback onLeftButtonTap;
+  final VoidCallback onRightButtonTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 48,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         border: Border.all(
           color: Theme.of(context).dividerColor,
@@ -30,7 +30,7 @@ class PaginationBox extends StatelessWidget {
             type: MaterialType.circle,
             color: Colors.transparent,
             child: IconButton(
-              icon: Icon(Icons.arrow_left),
+              icon: const Icon(Icons.arrow_left),
               onPressed: onLeftButtonTap,
             ),
           ),
@@ -38,7 +38,7 @@ class PaginationBox extends StatelessWidget {
             flex: 1,
             fit: FlexFit.tight,
             child: Text(
-              "Page ${pageIndex + 1} of $pagesCount",
+              'Page ${pageIndex + 1} of $pagesCount',
               textAlign: TextAlign.center,
             ),
           ),
@@ -46,7 +46,7 @@ class PaginationBox extends StatelessWidget {
             type: MaterialType.circle,
             color: Colors.transparent,
             child: IconButton(
-              icon: Icon(Icons.arrow_right),
+              icon: const Icon(Icons.arrow_right),
               onPressed: onRightButtonTap,
             ),
           ),

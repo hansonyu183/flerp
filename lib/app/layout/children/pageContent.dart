@@ -1,20 +1,21 @@
-import '../../models/index.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/index.dart';
 
 //typedef TabCallBack = void Function(PageVo page);
 
 class PageContent extends StatelessWidget {
-  PageContent({this.currentPageIndex,this.openPages});
+  const PageContent({this.currentPageIndex,this.openPages});
   final int currentPageIndex;
   final List<UserPage> openPages;
 
   @override
   Widget build(BuildContext context) {
     return currentPageIndex == -1
-    ? Text("")
+    ? const Text('')
     : IndexedStack(
             index: currentPageIndex,
-            children: openPages.map((page)=>page.widget).toList(),
+            children: openPages.map((UserPage page)=>page.widget).toList(),
         );
   }
 }

@@ -6,12 +6,12 @@ class JSONUtils {
   ///
   /// follow a given path in a given <String,dynamic>json
   /// and return found value if present or defaultValue if not present
-  get(json, String path, defaultValue) {
-    List pathSplitter = path.split(".");
+  dynamic get(dynamic json, String path,dynamic defaultValue) {
+    final List<String> pathSplitter = path.split('.');
     /// <String,dynamic> || String
-    var returnValue;
+    dynamic returnValue;
 
-    json.forEach((key, value) {
+    json.forEach((String key, dynamic value) {
       if (key == pathSplitter[0]) {
         if (pathSplitter.length == 1) {
           returnValue = value;
@@ -29,7 +29,7 @@ class JSONUtils {
           }catch(error){
             // handle error
           }
-          returnValue = get(value, pathSplitter.join("."), defaultValue);
+          returnValue = get(value, pathSplitter.join('.'), defaultValue);
         }catch(error){
           returnValue = defaultValue;
         }
@@ -37,6 +37,6 @@ class JSONUtils {
       }
     });
 
-    return returnValue != null ? returnValue : defaultValue;
+    return returnValue ?? defaultValue;
   }
 }

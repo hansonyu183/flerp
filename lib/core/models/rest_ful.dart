@@ -1,38 +1,37 @@
 import 'http.dart';
 
 class RestFul {
-  int id;
-  String apiUrl;
   RestFul({this.id, this.apiUrl});
 
   factory RestFul.fromJson(Map<String, dynamic> json) =>
       RestFul(id: json['id'] as int, apiUrl: json['apiUrl'] as String);
 
-  Map<String, dynamic> toJson() => {'id': this.id, 'apiUrl': this.apiUrl};
+  int id;
+  String apiUrl;
 
-  static login(String url, name,password) async {
-    var data = await http.get("$url", parameters: {"name": name,"password":password});
-    return data;
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'id': id, 'apiUrl': apiUrl};
+
+  static Future<Map<String, dynamic>> login(
+      String url, String name, String password) async {
+    return await http.get(url,
+        parameters: <String, dynamic>{'name': name, 'password': password});
   }
 
-
-  static getByName(String url, String name) async {
-    var data = await http.get("$url", parameters: {"name": name});
-    return data;
+  static Future<Map<String, dynamic>> getByName(String url,String name) async {
+      
+    return await http.get(url, parameters: <String, dynamic>{'name': name});
   }
 
-  Future put() async {
-    var data = await http.put("$apiUrl/$id", data: this.toJson());
-    return data;
+  Future<Map<String, dynamic>> put() async {
+    return await http.put('$apiUrl/$id', data: toJson());
   }
 
-  Future post() async {
-    var data = await http.post("$apiUrl/$id", data: this.toJson());
-    return data;
+  Future<Map<String, dynamic>> post() async {
+    return await http.post('$apiUrl/$id', data: toJson());
   }
 
-  Future delete() async {
-    var data = await http.delete("$apiUrl/$id", data: this.toJson());
-    return data;
+  Future<Map<String, dynamic>> delete() async {
+    return await http.delete('$apiUrl/$id', data: toJson());
   }
 }

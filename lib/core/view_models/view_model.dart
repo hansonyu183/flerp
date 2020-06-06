@@ -2,14 +2,12 @@ import 'package:consumer/consumer.dart';
 import 'package:flutter/material.dart';
 
 class ViewModel<T> {
+  ViewModel(this.viewCtx,this.model) 
+    :consumer= Consumer<T>(model);
+
   BuildContext viewCtx;
   T model;
   Consumer<T> consumer;
-  ViewModel(BuildContext viewCtx,T model) {
-    this.viewCtx=viewCtx;
-    this.model = model;
-    this.consumer = Consumer(this.model);
-  }
 
   Widget build(Widget Function(BuildContext ctx, T state) builder,
       {List<dynamic> Function(T s) memo}) {
@@ -21,33 +19,28 @@ class ViewModel<T> {
     return consumer.setState(fn);
   }
 
-  bool showConfirmDialog(String title, String content) {
-    bool confirmed;
-    showDialog(
+  Future< bool> showConfirmDialog(String title, String content) {
+   return showDialog<bool>(
         context: viewCtx,
-        builder: (context) {
+        builder: (BuildContext context) {
           return AlertDialog(
             title: Text(title),
             content: Text(content),
             actions: <Widget>[
               FlatButton(
-                child: Text('取消'),
+                child: const Text('取消'),
                 onPressed: () {
-                  confirmed = false;
-                  Navigator.of(context).pop('cancel');
-                  
+                  Navigator.of(context).pop(false);
                 },
               ),
               FlatButton(
-                child: Text('确认'),
+                child: const Text('确认'),
                 onPressed: () {
-                  confirmed = true;
-                  Navigator.of(context).pop('ok');                  
+                  Navigator.of(context).pop(true);                  
                 },
               ),
             ],
           );
         });
-    return confirmed;
   }
 }

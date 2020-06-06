@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'json_table.dart';
+import 'json_table_column.dart';
 import 'json_utilities.dart';
 
-import 'json_table_column.dart';
-import 'json_table.dart';
-
 class TableColumn extends StatelessWidget {
-  final String header;
-  final List dataList;
-  final TableHeaderBuilder tableHeaderBuilder;
-  final TableCellBuilder tableCellBuilder;
-  final JsonTableColumn column;
-  final jsonUtils = JSONUtils();
-  final Function(int index, dynamic rowMap) onRowTap;
-  final int highlightedRowIndex;
-  final bool allowRowHighlight;
-  final Color rowHighlightColor;
-
   TableColumn(
     this.header,
     this.dataList,
@@ -28,16 +17,27 @@ class TableColumn extends StatelessWidget {
     this.rowHighlightColor,
   );
 
+
+  final String header;
+  final List<dynamic> dataList;
+  final TableHeaderBuilder tableHeaderBuilder;
+  final TableCellBuilder tableCellBuilder;
+  final JsonTableColumn column;
+  final JSONUtils jsonUtils = JSONUtils();
+  final Function(int index, dynamic rowMap) onRowTap;
+  final int highlightedRowIndex;
+  final bool allowRowHighlight;
+  final Color rowHighlightColor;
+
+
   @override
   Widget build(BuildContext context) {
     return IntrinsicWidth(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          tableHeaderBuilder != null
-              ? tableHeaderBuilder(header)
-              : Container(
-                  padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+          if (tableHeaderBuilder != null) tableHeaderBuilder(header) else Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
                   decoration: BoxDecoration(
                     border: Border.all(width: 0.5),
                     color: Colors.grey[300],
@@ -45,7 +45,7 @@ class TableColumn extends StatelessWidget {
                   child: Text(
                     header,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 14.0,
                       color: Colors.black87,
@@ -56,7 +56,7 @@ class TableColumn extends StatelessWidget {
             child: Column(
               children: dataList
                   .map(
-                    (rowMap) => Column(
+                    (dynamic rowMap) => Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         GestureDetector(
@@ -82,7 +82,7 @@ class TableColumn extends StatelessWidget {
                                     ),
                                   )
                                 : Container(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 4.0, vertical: 2.0),
                                     decoration: BoxDecoration(
                                         border: Border.all(
@@ -98,7 +98,7 @@ class TableColumn extends StatelessWidget {
                                         ),
                                       ),
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14.0,
                                       ),
                                     ),
@@ -117,7 +117,9 @@ class TableColumn extends StatelessWidget {
   }
 
   String getFormattedValue(dynamic value) {
-    if (value == null) return column?.defaultValue ?? '';
+    if (value == null) {
+      return column?.defaultValue ?? '';
+    }
     if (column?.valueBuilder != null) {
       return column.valueBuilder(value);
     }

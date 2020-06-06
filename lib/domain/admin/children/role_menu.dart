@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flerp/app/models/index.dart';
 
-class RoleMenu extends StatelessWidget {
-  RoleMenu(
+class RoleMenu extends StatefulWidget {
+  const RoleMenu(
       {Key key, this.roles, this.selectIndex, this.onSelected, this.onDeleted})
       : super(key: key);
   final List<Role> roles;
   final int selectIndex;
   final void Function(int selectIndex) onSelected; //声明函数对象
-  final void Function(int selectIndex) onDeleted; //声明函数对象
+  final void Function(int selectIndex) onDeleted; 
+  @override
+  _RoleMenuState createState() => _RoleMenuState();
+}
+
+class _RoleMenuState extends State<RoleMenu> {
   @override
   Widget build(BuildContext context) {
-    var itemIndex = -1;
-    var items = roles.map((Role role) {
+    int itemIndex = -1;
+    final List<RawChip> items = widget.roles.map((Role role) {
       itemIndex++;
       return RawChip(
-          avatar: Icon(Icons.perm_identity),
+          avatar: const Icon(Icons.perm_identity),
           shape: Border(
             bottom: BorderSide(
-                color: itemIndex == selectIndex ? Colors.blue : Colors.grey,
+                color: itemIndex == widget.selectIndex ? Colors.blue : Colors.grey,
                 width: 2),
           ),
           backgroundColor: Colors.grey,
           showCheckmark: false,
-          label: role.name != null ? Text(role.name) : TextField(),
-          onSelected: (v) => onSelected(selectIndex),
-          deleteIcon: Icon(Icons.close),
-          onDeleted: () => onDeleted(selectIndex));
+          label: role.name != null ? Text(role.name) : const TextField(),
+          onSelected: (bool v) => widget.onSelected(widget.selectIndex),
+          deleteIcon: const Icon(Icons.close),
+          onDeleted: (){ widget.onDeleted(widget.selectIndex); });
 
       /*return InkWell(
           child: role.name != null 
@@ -35,9 +40,11 @@ class RoleMenu extends StatelessWidget {
           onTap: () => onTap(role));*/
     }).toList();
 
-    return (roles == null || roles.length == 0)
-        ? Text("")
-        : Column(children: items);
+    if (widget.roles == null || widget.roles.isEmpty) {
+      return const Text('');
+    } else {
+      return Column(children: items);
+    }
   }
 }
 

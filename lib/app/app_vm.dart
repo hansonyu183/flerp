@@ -1,5 +1,3 @@
-import 'package:flerp/domain/models/index.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flerp/core/view_models/view_model.dart';
@@ -9,10 +7,10 @@ class AppVm extends ViewModel<AppM> {
   AppVm(BuildContext viewCtx):super(viewCtx,AppM.admin());
 
   void logout() {
-    setState((s) => s.user = null);
+    setState((AppM s) => s.user = null);
   }
 
-  void login(String userName, passWord) async {
+  void login(String userName, String passWord)  {
     /* var cancelToast =
         BotToast.showLoading(duration: Duration(milliseconds: 3000));
 
@@ -26,10 +24,11 @@ class AppVm extends ViewModel<AppM> {
     }
     cancelToast();
 
-    //ResponeBody responeBody = await UserApi.login({"name":userName,"passwrod":passWord});*/
+    //RespondBody respondBody = await UserApi.login({"name":userName,"passWord":passWord});*/
+    return ;
   }
 
-  void register(String userName, passWord) async {
+  void register(String userName, String passWord)  {
     //UserData.register(userName, passWord);
     //AppVm.login();
   }

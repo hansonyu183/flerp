@@ -9,7 +9,7 @@ part of 'ebas.dart';
 Ebas _$EbasFromJson(Map<String, dynamic> json) {
   return Ebas()
     ..ebas = (json['ebas'] as List)
-        ?.map((e) => e == null ? null : Eba.fromJson(e as Map<String, dynamic>))
+        ?.map((dynamic e) => e == null ? null : Eba.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 

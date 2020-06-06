@@ -4,22 +4,22 @@ import '../../models/index.dart';
 typedef MenuCallBack = void Function(UserPage);
 
 class Menu extends StatelessWidget {
-  Menu({Key key, this.modules, this.onTap, this.onExpend}) : super(key: key);
+  const Menu({Key key, this.modules, this.onTap, this.onExpend}) : super(key: key);
   final List<Module> modules ;
   final MenuCallBack onTap; //声明函数对象
   final VoidCallback onExpend;
   
   @override
   Widget build(BuildContext context) {
-    return modules == null ? Text("null") : Wrap(children:genList(modules),alignment: WrapAlignment.center);
+    return modules == null ? const Text('null') : Wrap(children:genList(modules),alignment: WrapAlignment.center);
   }
-  List<PopupMenuButton> genList(List<Module> modules) {
-    return modules.map((module) {
+  List<PopupMenuButton<UserPage>> genList(List<Module> modules) {
+    return modules.map((Module module) {
        return PopupMenuButton<UserPage>(
          icon: Icon(getIcon()),
          tooltip: module.name,
          onSelected: onTap,
-         itemBuilder: (context) {
+         itemBuilder: (BuildContext context) {
            return <PopupMenuEntry<UserPage>>[ ...genItem(module.pages)];
          },
         );
@@ -27,8 +27,8 @@ class Menu extends StatelessWidget {
   }
   
   List<PopupMenuItem<UserPage>> genItem(List<UserPage> pages) {
-    return pages.map((page){
-        return  PopupMenuItem(
+    return pages.map((UserPage page){
+        return  PopupMenuItem<UserPage>(
         value: page,
         child: Text(page.title));
       }

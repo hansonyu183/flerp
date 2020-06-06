@@ -47,10 +47,10 @@ class _UpdateActionState extends State<UpdateAction> {
 
     switch (actionStateIndex) {
       case 0: 
-        _actionButtons = [ActionButton.save(onPressed: _onDoAction)];
+        _actionButtons = <Widget>[ActionButton.save(onPressed: _onDoAction)];
         break;
       case 1:
-        _actionButtons = [
+        _actionButtons = <Widget>[
           ActionButton.save(onPressed: ()=>1),
           ActionButton.askCheck(onPressed: _onDoAction),
           ActionButton.delete(onPressed: _onInitAction),
@@ -58,7 +58,7 @@ class _UpdateActionState extends State<UpdateAction> {
         ];
         break;
       case 2:
-        _actionButtons = [
+        _actionButtons = <Widget>[
           ActionButton.unAskCheck(onPressed: _onUndoAction),
           //Text("反送审"),
           ActionButton.check(onPressed: _onDoAction),
@@ -66,7 +66,7 @@ class _UpdateActionState extends State<UpdateAction> {
         ];
         break;
       case 3:
-        _actionButtons = [
+        _actionButtons = <Widget>[
           ActionButton.unCheck(onPressed: _onUndoAction),
           //Text("反审核"),
           ActionButton.finish(onPressed: _onDoAction),
@@ -74,7 +74,7 @@ class _UpdateActionState extends State<UpdateAction> {
         ];
         break;
       case 4:
-        _actionButtons = [
+        _actionButtons = <Widget>[
           ActionButton.unFinish(onPressed: _onUndoAction),
           //Text("反完成"),
         ];

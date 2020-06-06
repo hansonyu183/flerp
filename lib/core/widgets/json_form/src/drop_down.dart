@@ -7,7 +7,7 @@ class DropDownData {
   final String text;
   final String easyCode;
 
-  String get sarchString => '$value,$text,$easyCode';
+  String get searchString => '$value,$text,$easyCode';
   @override
   String toString() {
     return text;
@@ -20,24 +20,24 @@ class DropDownField extends StatelessWidget {
       : super(key: key);
   final String label;
   final IconData iconDate;
-  final List<Map<String, dynamic>> dataList;
+  final List<DropDownData> dataList;
   final FormFieldSetter<String> onSaved;
 
-  final GlobalKey<FLAutoCompleteState> _key = GlobalKey<FLAutoCompleteState>();
+  final GlobalKey<FLAutoCompleteState<DropDownData>> _key = GlobalKey<FLAutoCompleteState<DropDownData>>();
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> _selectDate;
-    var _sugList = dataList;
-    var _txtCon = TextEditingController();
+    DropDownData _selectDate;
+    List<DropDownData> _sugList = dataList;
+    final TextEditingController _txtCon = TextEditingController();
     return Container(
       width: 150,
-      child: FLAutoComplete(
+      child: FLAutoComplete<DropDownData>(
         key: _key,
         dataList: dataList,
-        onSelectedSuggestion: (suggestion) {
-          _sugList = [suggestion];
+        onSelectedSuggestion: (DropDownData suggestion) {
+          _sugList = <DropDownData>[suggestion];
           _selectDate = suggestion;
-          _txtCon.text = suggestion["text"];
+          _txtCon.text = suggestion.text;
         },
             child: TextFormField(              
               controller: _txtCon,
@@ -50,12 +50,11 @@ class DropDownField extends StatelessWidget {
                          _key.currentState.updateSuggestionList(dataList),
                   ),
                   labelText: label),
-              onChanged: (text) {
-                _sugList = [];
+              onChanged: (String text) {
+                _sugList = <DropDownData>[];
                 if (text != null && text.isNotEmpty) {
-                  for (Map<String, dynamic> data in dataList) {
-                    var option =
-                        "${data['value']},${data['text']},${data['easy_code']}";
+                  for (final DropDownData data in dataList) {
+                    final String option = data.searchString;
                     if (option.toLowerCase().contains(text.toLowerCase())) {
                       _sugList.add(data);
                     }
@@ -64,13 +63,13 @@ class DropDownField extends StatelessWidget {
                 }
                 _key.currentState.updateSuggestionList(_sugList);
               },
-              onSaved: (value) {
+              onSaved: (String value) {
                 if (onSaved != null) {
-                  onSaved(_selectDate["value"]);
+                  onSaved(_selectDate.value);
                 }
               },
               onEditingComplete: (){
-                var selectTxt=_selectDate["text"];
+                final String selectTxt=_selectDate.text;
                 if (_txtCon.text!=selectTxt){
                   _txtCon.text=selectTxt;
                   _key.currentState.hideAutoComplete();

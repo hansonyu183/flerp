@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class LabelField extends StatelessWidget {
-  const LabelField({Key key, this.label, this.initialValue="0", @required this.onSaved,this.iconData,this.enabled=true})
+  const LabelField({Key key, this.label, this.initialValue='0', @required this.onSaved,this.iconData,this.enabled=true})
       : super(key: key);
   final String label; 
   final String initialValue;

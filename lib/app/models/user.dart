@@ -1,15 +1,18 @@
-import '../../core/models/rest_ful.dart';
-import 'user_page.dart';
-import 'role.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../core/models/rest_ful.dart';
+import 'role.dart';
+import 'user_page.dart';
 
 part 'user.g.dart';
 
 @JsonSerializable()
 class User extends RestFul {
-  User({this.id, this.name, this.password, this.phone,this.role,this.firstPage});
+  User({int id, this.name, this.password, this.phone,this.role,this.firstPage}):super(id:id,apiUrl:'user');
 
-  int id;
+  @override
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
   String name, phone, password;
   UserPage firstPage;
   Role role;
@@ -17,20 +20,17 @@ class User extends RestFul {
   //String apiUrl;
 
   @override
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  @override
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  factory User.fromServer(String name) {
-    var url = "user";
-    return User.fromJson(RestFul.getByName(url, name))
+  static  Future<User> fromServer (String name) async {
+    const String url = 'user';
+    return User.fromJson(await RestFul.getByName(url, name))
             ..apiUrl=url;
   }
 
-  factory User.login(String name,String password) {
-    var url = "user";
-    return User.fromJson(RestFul.login(url, name,password))
+  static  Future<User> login(String name,String password) async {
+    const String url = 'user';
+    return User.fromJson(await RestFul.login(url, name,password))
             ..apiUrl=url;
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-List _iconList = [
+List<IconData> _iconList = <IconData>[
   Icons.account_balance,
   Icons.account_balance_wallet,
   Icons.account_box,
@@ -55,11 +55,11 @@ List _iconList = [
   Icons.grid_on,
 ];
 
-List _menuIcon = [];
+List<IconData> _menuIcon = <IconData>[];
 
-dynamic getIcon() {
-  var icon;
-  if (_iconList.length > 0) {
+IconData getIcon() {
+  IconData icon;
+  if (_iconList.isNotEmpty) {
     icon = _iconList.removeLast();
     _menuIcon.add(icon);
   } else {

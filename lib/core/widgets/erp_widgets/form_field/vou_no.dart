@@ -17,9 +17,9 @@ class VouNo extends StatelessWidget {
           validator: FieldValidator.vouNo,
           autovalidate: true,
           onSaved: onSaved,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             icon: Icon(Icons.receipt),
-            labelText: "单号",
+            labelText: '单号',
           ),
         ));
   }

@@ -11,17 +11,7 @@ typedef TableCellBuilder = Widget Function(dynamic value);
 typedef OnRowSelect = void Function(int index, dynamic map);
 
 class JsonTable extends StatefulWidget {
-  final List dataList;
-  final TableHeaderBuilder tableHeaderBuilder;
-  final TableCellBuilder tableCellBuilder;
-  final List<JsonTableColumn> columns;
-  final bool showColumnToggle;
-  final bool allowRowHighlight;
-  final Color rowHighlightColor;
-  final int paginationRowCount;
-  final OnRowSelect onRowSelect;
-
-  JsonTable(
+  const JsonTable(
     this.dataList, {
     Key key,
     this.tableHeaderBuilder,
@@ -34,18 +24,28 @@ class JsonTable extends StatefulWidget {
     this.onRowSelect,
   }) : super(key: key);
 
+  final List<dynamic> dataList;
+  final TableHeaderBuilder tableHeaderBuilder;
+  final TableCellBuilder tableCellBuilder;
+  final List<JsonTableColumn> columns;
+  final bool showColumnToggle;
+  final bool allowRowHighlight;
+  final Color rowHighlightColor;
+  final int paginationRowCount;
+  final OnRowSelect onRowSelect;
+
   @override
   _JsonTableState createState() => _JsonTableState();
 }
 
 class _JsonTableState extends State<JsonTable> {
-  Set<String> headerList = new Set();
-  Set<String> filterHeaderList = new Set();
+  Set<String> headerList = <String>{};
+  Set<String> filterHeaderList = <String>{};
   int highlightedRowIndex;
   int pageIndex = 0;
   int paginationRowCount;
   int pagesCount;
-  List<Map> data;
+  List<Map<dynamic, dynamic>> data;
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _JsonTableState extends State<JsonTable> {
 
   void init() {
     assert(widget.dataList != null && widget.dataList.isNotEmpty);
-    data = widget.dataList.cast<Map>();
+    data = widget.dataList.cast<Map<dynamic, dynamic>>();
     pageIndex = 0;
     if (_showPagination())
       paginationRowCount =
@@ -67,7 +67,9 @@ class _JsonTableState extends State<JsonTable> {
 
   @override
   void didUpdateWidget(JsonTable oldWidget) {
-    if (oldWidget.dataList != widget.dataList) init();
+    if (oldWidget.dataList != widget.dataList) {
+      init();
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -80,13 +82,13 @@ class _JsonTableState extends State<JsonTable> {
         children: <Widget>[
           if (widget.showColumnToggle)
             Container(
-              margin: EdgeInsets.only(bottom: 4),
+              margin: const EdgeInsets.only(bottom: 4),
               child: ExpansionTile(
-                leading: Icon(Icons.filter_list),
+                leading: const Icon(Icons.filter_list),
                 title: Text(
-                  "明细(${filterHeaderList.length})",
-                 // style: TextStyle(
-                 //   fontSize: 13,
+                  '明细(${filterHeaderList.length})',
+                  // style: TextStyle(
+                  //   fontSize: 13,
                   //  fontWeight: FontWeight.w500,
                   //),
                 ),
@@ -105,23 +107,21 @@ class _JsonTableState extends State<JsonTable> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Checkbox(
-                                      value: this
-                                          .filterHeaderList
-                                          .contains(header),
+                                      value: filterHeaderList.contains(header),
                                       onChanged: null,
                                     ),
                                     Text(header),
-                                   // SizedBox(
-                                     // width: 4.0,
-                                   // ),
+                                    // SizedBox(
+                                    // width: 4.0,
+                                    // ),
                                   ],
                                 ),
                                 onTap: () {
                                   setState(() {
-                                    if (this.filterHeaderList.contains(header))
-                                      this.filterHeaderList.remove(header);
+                                    if (filterHeaderList.contains(header))
+                                      filterHeaderList.remove(header);
                                     else
-                                      this.filterHeaderList.add(header);
+                                      filterHeaderList.add(header);
                                   });
                                 },
                               ),
@@ -138,10 +138,10 @@ class _JsonTableState extends State<JsonTable> {
                 child: (widget.columns != null)
                     ? Row(
                         children: widget.columns
-                            .where(
-                                (item) => filterHeaderList.contains(item.field))
+                            .where((JsonTableColumn item) =>
+                                filterHeaderList.contains(item.field))
                             .map(
-                              (item) => TableColumn(
+                              (JsonTableColumn item) => TableColumn(
                                 item.label,
                                 _getPaginatedData(),
                                 widget.tableHeaderBuilder,
@@ -158,7 +158,7 @@ class _JsonTableState extends State<JsonTable> {
                     : Row(
                         children: filterHeaderList
                             .map(
-                              (header) => TableColumn(
+                              (String header) => TableColumn(
                                 header,
                                 _getPaginatedData(),
                                 widget.tableHeaderBuilder,
@@ -198,43 +198,47 @@ class _JsonTableState extends State<JsonTable> {
   }
 
   Set<String> extractColumnHeaders() {
-    var headers = Set<String>();
+    final Set<String> headers = <String>{};
     if (widget.columns != null) {
-      widget.columns.forEach((item) {
+      for (final JsonTableColumn item in widget.columns) {
         headers.add(item.field);
-      });
+      }
     } else {
-      widget.dataList.forEach((map) {
-        map.keys.forEach((key) {
+      for (final dynamic map in widget.dataList) {
+        map.keys.forEach((String key) {
           headers.add(key);
         });
-      });
+      }
     }
     return headers;
   }
 
   void setHeaderList() {
-    var headerList = extractColumnHeaders();
+    final Set<String> headerList = extractColumnHeaders();
     assert(headerList != null);
     this.headerList = headerList;
-    this.filterHeaderList.addAll(headerList);
+    filterHeaderList.addAll(headerList);
   }
 
-  onRowTap(int index, dynamic rowMap) {
+  void onRowTap(int index, dynamic rowMap) {
     setState(() {
       if (highlightedRowIndex == index)
         highlightedRowIndex = null;
       else
         highlightedRowIndex = index;
     });
-    if (widget.onRowSelect != null) widget.onRowSelect(index, rowMap);
+    if (widget.onRowSelect != null) {
+      widget.onRowSelect(index, rowMap);
+    }
   }
 
-  List _getPaginatedData() {
+  List<Map<dynamic, dynamic>> _getPaginatedData() {
     if (paginationRowCount != null) {
-      final startIndex = pageIndex == 0 ? 0 : (pageIndex * paginationRowCount);
-      final endIndex =
-          math.min((startIndex + paginationRowCount), (data.length - 1));
+      final int startIndex =
+          pageIndex == 0 ? 0 : (pageIndex * paginationRowCount);
+      final int ind1 = startIndex + paginationRowCount;
+      final int ind2 = data.length - 1;
+      final int endIndex = math.min<int>(ind1, ind2);
       if (endIndex == data.length - 1)
         return data.sublist(startIndex, endIndex + 1).toList(growable: false);
       else

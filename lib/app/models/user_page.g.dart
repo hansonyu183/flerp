@@ -26,8 +26,8 @@ T _$enumDecode<T>(
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
+  final T value = enumValues.entries
+      .singleWhere((MapEntry<T, dynamic> e) => e.value == source, orElse: () => null)
       ?.key;
 
   if (value == null && unknownValue == null) {
@@ -48,7 +48,7 @@ T _$enumDecodeNullable<T>(
   return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
 }
 
-const _$PageEnumEnumMap = {
+const Map<PageEnum, String> _$PageEnumEnumMap = <PageEnum, String>{
   PageEnum.roleEditor: 'roleEditor',
   PageEnum.baseEbaEditor: 'baseEbaEditor',
   PageEnum.baseResEditor: 'baseResEditor',

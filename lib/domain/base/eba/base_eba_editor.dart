@@ -1,44 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 
-class _Model {
-  String ebaId;
-  String ebaName;
-
-  _Model(this.ebaId, this.ebaName);
-
-  _Model.fromJson(Map<String, dynamic> json)
-      : ebaId = json['ebaId'],
-        ebaName = json['ebaName'];
-
-  Map<String, dynamic> toJson() =>
-    {
-      'ebaId': ebaId,
-      'ebaName': ebaName,
-    };
-}
-
 class BaseEbaEditor extends StatelessWidget {
-  BaseEbaEditor({Key key,this.json}) : super(key: key);
-  final String json;
-  static const String js="d";
+  const BaseEbaEditor({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {   
-    _Model _model; 
-    if (json != null && json!=""){
-     _model = new _Model.fromJson(jsonDecode(json));
-    } else {
-      _model = _Model("eba1","");
-    }
     return  Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children:[
-          Text(_model.ebaId),
+        children:<Widget>[
+          const Text(''),
           TextField(
-            onChanged : (value) {_model.ebaName=value;}
+            onChanged : (String value) {}
           ),
-          FlatButton(child: Text("Svae"),
+          FlatButton(child: const Text('save'),
             onPressed: (){
               print(1);
               })
@@ -71,7 +45,7 @@ class _BaseEbaEditor extends State<BaseEbaEditor> {
     var r = await BaseEba.data({"eba_id": _ebaId});
     setState(() {
       _ebaInf = r.data.toString();
-      gobalConsumer.state.baseEbaEditorModel.ebaInf=_ebaInf;
+      globalConsumer.state.baseEbaEditorModel.ebaInf=_ebaInf;
     });
   }
 
@@ -89,7 +63,7 @@ class _BaseEbaEditor extends State<BaseEbaEditor> {
               controller: txtCon,
               onChanged: (value) {
                 _ebaId = value;
-                gobalConsumer.state.baseEbaEditorModel.ebaId=value;
+                globalConsumer.state.baseEbaEditorModel.ebaId=value;
               },
             ),
             Text(_ebaInf)

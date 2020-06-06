@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
-  Login({Key key, this.appTitle, this.onLogin, this.onRegister})
+  const Login({Key key, this.appTitle, this.onLogin, this.onRegister})
       : super(key: key);
   final String appTitle;
   final void Function(String userName, String passWord) onLogin;
@@ -16,28 +16,30 @@ class _LoginState extends State<Login> {
   bool isRegisterFrom = false;
 
   Widget buildConfirmPassword() {
-    return isRegisterFrom
-        ? TextFormField(
-            style: TextStyle(color: Colors.black),
+    if (isRegisterFrom) {
+      return TextFormField(
+            style: const TextStyle(color: Colors.black),
             obscureText: true,
             autovalidate: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 // helperText: '两次密码必须一致',
-                labelText: "确认密码",
+                labelText: '确认密码',
                 icon: Icon(Icons.lock_outline)),
-            onSaved: (v) {},
-            validator: (v) {
-              return v == passWord ? null : "两次密码必须一致";
+            onSaved: (String v) {},
+            validator: (String v) {
+              return v == passWord ? null : '两次密码必须一致';
             },
-          )
-        : Text("");
+          );
+    } else {
+      return const Text('');
+    }
   }
 
   Widget buildButton() {
-    var text1 = isRegisterFrom ? "注 册" : "登 录";
-    var text2 = isRegisterFrom ? "重新登录" : "注册账号";
-    var _onPressed = isRegisterFrom ? widget.onRegister : widget.onLogin;
+    final String text1 = isRegisterFrom ? '注 册' : '登 录';
+    final String text2 = isRegisterFrom ? '重新登录' : '注册账号';
+    final void Function(String userName, String passWord) _onPressed = isRegisterFrom ? widget.onRegister : widget.onLogin;
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -65,56 +67,56 @@ class _LoginState extends State<Login> {
     return Form(
         key: formKey,
         child: Container(
-            padding: EdgeInsets.all(40.0),
+            padding: const EdgeInsets.all(40.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: Colors.black,
               ),
             ),
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
                 maxHeight: 400, maxWidth: 500, minHeight: 200, minWidth: 100),
             child: Column(
                 mainAxisAlignment:
                     MainAxisAlignment.spaceEvenly, //MainAxisAlignment.center,
-                children: [
-                  Icon(
+                children: <Widget>[
+                  const Icon(
                     Icons.person,
                     size: 50,
                   ),
                   TextFormField(
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "请输入用户名",
+                      labelText: '请输入用户名',
                       icon: Icon(
                         Icons.people,
                         //color: Colors.blue,
                       ),
                     ),
-                    onSaved: (v) {},
-                    onFieldSubmitted: (v) {
+                    onSaved: (String v) {},
+                    onFieldSubmitted: (String v) {
                       userName = v;
                     },
-                    validator: (v) {
-                      return v.isEmpty ? "请输入用户名" : null;
+                    validator: (String v) {
+                      return v.isEmpty ? '请输入用户名' : null;
                     },
                   ),
                   TextFormField(
                     autovalidate: true,
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "请输入密码",
+                      labelText: '请输入密码',
                       icon: Icon(
                         Icons.lock_open,
                         //color: Colors.blue,
                       ),
                     ),
-                    onSaved: (v) {},
-                    validator: (v) {
+                    onSaved: (String v) {},
+                    validator: (String v) {
                       passWord = v;
-                      return v.isEmpty ? "请输入密码" : null;
+                      return v.isEmpty ? '请输入密码' : null;
                     },
                   ),
                   buildConfirmPassword(),
@@ -348,15 +350,15 @@ class RegisterForm extends StatelessWidget {
       return;
     }
     form.save();
-    UserApi.login(user.toJson()).then((ResponeBody responeBody) {
-      if (responeBody.success) {
-        GlobalUtil.token = responeBody.data;
+    UserApi.login(user.toJson()).then((RespondBody respondBody) {
+      if (respondBody.success) {
+        GlobalUtil.token = respondBody.data;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (BuildContext context) => Layout()),
         );
       } else {
-        this.error = responeBody.message;
+        this.error = respondBody.message;
         BotToast.showText(text: this.error);
         setState(() {});
       }

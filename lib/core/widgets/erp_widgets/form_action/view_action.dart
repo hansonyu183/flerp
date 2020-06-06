@@ -7,7 +7,7 @@ class ViewAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(children:[
+      child: Row(children:<Widget>[
           ActionButton.preVou(onPressed: onAction),
           ActionButton.nextVou(onPressed: onAction),   
           ActionButton.option(onPressed: onAction),       

@@ -10,8 +10,8 @@ Role _$RoleFromJson(Map<String, dynamic> json) {
   return Role(
     id: json['id'] as int,
     name: json['name'] as String,
-    modules: (json['modules'] as List)
-        ?.map((e) =>
+    modules: (json['modules'] as List<Module>)
+        ?.map((dynamic e) =>
             e == null ? null : Module.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
@@ -20,5 +20,5 @@ Role _$RoleFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$RoleToJson(Role instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'modules': instance.modules?.map((e) => e?.toJson())?.toList(),
+      'modules': instance.modules?.map((Module e) => e?.toJson())?.toList(),
     };

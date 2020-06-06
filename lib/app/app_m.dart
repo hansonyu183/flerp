@@ -1,48 +1,48 @@
 import 'models/index.dart';
 
 class AppM {
-  User user;
-
-  AppM();
-
+    AppM();
   AppM.admin() {
     AppM();
-    this.user = _getAdmin();
+    user = _getAdmin();
   }
+  User user;
+
+
   
   User _getAdmin() {
     int _id = 1;
-        Module adminM = Module(id: _id++, name: "系统管理", pages: [
+        final Module adminM = Module(id: _id++, name: '系统管理', pages: <UserPage>[
       UserPage(name: PageEnum.roleEditor),
     ]);
 
-    Module base = Module(id: _id++, name: "基础资料", pages: [
+    final Module base = Module(id: _id++, name: '基础资料', pages: <UserPage>[
       UserPage(name: PageEnum.baseEbaEditor),
       UserPage(name: PageEnum.baseResEditor),
       UserPage(name: PageEnum.baseSupEditor),
     ]);
 
-    Module res = Module(id: _id++, name: "库存", pages: [
+    final Module res = Module(id: _id++, name: '库存', pages: <UserPage>[
       UserPage(name: PageEnum.resIn),
     ]);
 
-    Module bankNote = Module(id: _id++, name: "票据处理", pages: [
+    final Module bankNote = Module(id: _id++, name: '票据处理', pages: <UserPage>[
       UserPage(name: PageEnum.bankNoteVou),
     ]);
 
-    Module testUserPage = Module(id: _id++, name: "测试", pages: [
+    final Module testUserPage = Module(id: _id++, name: '测试', pages: <UserPage>[
       UserPage(name: PageEnum.testPage1),
     ]);
 
-    Role admin = Role(id: 1, name: "admin", modules: [
+    final Role admin = Role(id: 1, name: 'admin', modules: <Module>[
       adminM,
       base,
       res,
       bankNote,
       testUserPage,
     ]);
-    User userData = User(
-        name: "hanson",
+    final User userData = User(
+        name: 'hanson',
         role: admin,
         firstPage: UserPage(name: PageEnum.testPage1));
     return userData;

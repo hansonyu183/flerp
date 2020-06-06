@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatefulWidget {
-  DatePicker(
+  const DatePicker(
       {Key key,
       this.label,
       this.onChanged,
@@ -28,10 +28,10 @@ class DatePicker extends StatefulWidget {
 
   static String dateValidator(String value){
     try {
-      var _date=DateFormat('yyyy-MM-dd').parse(value);
-      return DateFormat('yyyy-MM-dd').format(_date)==value ? null : "日期格式有误";
+      final DateTime _date=DateFormat('yyyy-MM-dd').parse(value);
+      return DateFormat('yyyy-MM-dd').format(_date)==value ? null : '日期格式有误';
     } catch (_) {
-      return "日期格式有误";
+      return '日期格式有误';
     }    
   }
 
@@ -45,12 +45,12 @@ class _DatePickerState extends State<DatePicker> {
 
   Future<String> _selectDate(String initialDate, TextEditingController txtCon,
       BuildContext context) async {
-    var date = await showDatePicker(
+    final DateTime date = await showDatePicker(
         context: context,
         initialDate: DateTime.parse(initialDate),
         firstDate: DateTime(2010, 1),
         lastDate: DateTime(2030, 1));
-    var dateStr = DatePicker.dateToString(date);
+    final String dateStr = DatePicker.dateToString(date);
     if (initialDate != dateStr) {
       txtCon.text = dateStr;
       if (widget.onChanged != null) {
@@ -85,7 +85,7 @@ class _DatePickerState extends State<DatePicker> {
           controller: _txtCon,
           decoration: InputDecoration(
             icon: InkWell(
-                child: Icon(Icons.calendar_today),
+                child: const Icon(Icons.calendar_today),
                 onTap: () async {
                   _resultDate =
                       await _selectDate(widget.initialDate, _txtCon, context);

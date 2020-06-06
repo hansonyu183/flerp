@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flerp/app/models/index.dart';
 
 class AdminModulesMenu extends StatefulWidget {
-  AdminModulesMenu({Key key, this.modules, this.onTap}) : super(key: key);
+  const AdminModulesMenu({Key key, this.modules, this.onTap}) : super(key: key);
   final List<Module> modules;
   final void Function(UserPage) onTap;
   @override
@@ -12,7 +12,7 @@ class AdminModulesMenu extends StatefulWidget {
 class _AdminModulesMenuState extends State<AdminModulesMenu> {
   @override
   Widget build(BuildContext context) {
-    return widget.modules == null ? Text("null") : genMenu(widget.modules);
+    return widget.modules == null ? const Text('null') : genMenu(widget.modules);
   }
 
   ListView genMenu(List<Module> modules) {
@@ -20,33 +20,37 @@ class _AdminModulesMenuState extends State<AdminModulesMenu> {
   }
 
   List<Widget> genList(List<Module> modules) {
-    return modules.map((module) {
-      List<Widget> pagemenu = [];
-      if (module.pages != null) pagemenu = genItem(module.pages);
-      if (module.modules != null) pagemenu.addAll(genList(module.modules));
+    return modules.map((Module module) {
+      List<Widget> pageMenu = <Widget>[];
+      if (module.pages != null) {
+        pageMenu = genItem(module.pages);
+      }
+      if (module.modules != null) {
+        pageMenu.addAll(genList(module.modules));
+      }
       return ExpansionTile(
-        children: pagemenu,
+        children: pageMenu,
         title: Text(module.name),
       );
     }).toList();
   }
 
   List<Widget> genItem(List<UserPage> pages) {
-    return pages.map((page) {
+    return pages.map((UserPage page) {
       return CheckTile(page: page);
     }).toList();
   }
 }
 
 class CheckTile extends StatefulWidget {
-  CheckTile({Key key,this.page}) : super(key: key);
-  UserPage page;
+  const CheckTile({Key key,this.page}) : super(key: key);
+  final UserPage page;
   @override
   _CheckTileState createState() => _CheckTileState();
 }
 
 class _CheckTileState extends State<CheckTile> {
-  var _checked=false;
+  bool _checked=false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +58,7 @@ class _CheckTileState extends State<CheckTile> {
          controlAffinity: ListTileControlAffinity.leading,
           value: _checked,
           title: Text(widget.page.title),
-          onChanged: (value) {
+          onChanged: (bool value) {
             setState(() {
               _checked = value;
             });
