@@ -47,7 +47,7 @@ class _BankNoteVouState extends State<BankNoteVou> {
                     DropDownField(
                       label: '客户',
                       iconDate: Icons.account_box,
-                      dataList: <DropDownData>[
+                      dataList: <DropDownData>[/* cSpell:disable */
                         DropDownData('A0001', '高精有限公司', 'gjyxgs'),
                         DropDownData('A0001', '高精有限公司', 'gjyxgs'),
                         DropDownData('A0002', '工商银行', 'gsyh'),

@@ -21,9 +21,9 @@ VouData _$VouDataFromJson(Map<String, dynamic> json) {
     srcAccount: json['srcAccount'] == null
         ? null
         : Account.fromJson(json['srcAccount'] as Map<String, dynamic>),
-    targAccount: json['targAccount'] == null
+    targeAccount: json['targeAccount'] == null
         ? null
-        : Account.fromJson(json['targAccount'] as Map<String, dynamic>),
+        : Account.fromJson(json['targeAccount'] as Map<String, dynamic>),
     ioAmo: json['ioAmo'] as String,
     jsonItemList: json['jsonItemList'] as String,
   );
@@ -37,7 +37,7 @@ Map<String, dynamic> _$VouDataToJson(VouData instance) => <String, dynamic>{
       'sup': instance.sup?.toJson(),
       'vouAmo': instance.vouAmo,
       'srcAccount': instance.srcAccount?.toJson(),
-      'targAccount': instance.targAccount?.toJson(),
+      'targeAccount': instance.targeAccount?.toJson(),
       'ioAmo': instance.ioAmo,
       'jsonItemList': instance.jsonItemList,
     };

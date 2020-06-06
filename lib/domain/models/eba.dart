@@ -6,8 +6,10 @@ part 'eba.g.dart';
 class Eba {
   Eba({this.ebaId, this.ebaName, this.easyCode});
 
-  String ebaId, ebaName, easyCode;
   factory Eba.fromJson(Map<String, dynamic> json) => _$EbaFromJson(json);
+
+  String ebaId, ebaName, easyCode;
+  
   Map<String, dynamic> toJson() => _$EbaToJson(this);
 
 }
